@@ -1,0 +1,34 @@
+package jy.kim.lancs.magicdoor.rest.service;
+
+import static jy.kim.lancs.magicdoor.util.DbUtil.close;
+import static jy.kim.lancs.magicdoor.util.DbUtil.commit;
+import static jy.kim.lancs.magicdoor.util.DbUtil.getConnection;
+import static jy.kim.lancs.magicdoor.util.DbUtil.rollback;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+
+import jy.kim.lancs.magicdoor.rest.bean.MessageBean;
+import jy.kim.lancs.magicdoor.rest.dao.RESTMagicDoorDao;
+
+public class RESTPostReplyMessageService {
+
+	public ArrayList<MessageBean> replyMessage(MessageBean message) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		Connection con = getConnection();
+		RESTMagicDoorDao dbPro = new RESTMagicDoorDao(con);
+
+		ArrayList<MessageBean> bean = dbPro.replyMessage(message);
+
+		if (bean != null) {
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		close(con);
+
+		return bean;
+	}
+
+}
